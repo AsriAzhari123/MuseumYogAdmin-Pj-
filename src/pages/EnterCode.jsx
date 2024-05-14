@@ -11,6 +11,13 @@ export default function EnterCode({ userEmail }) {
 
   const handleChange = (e, index) => {
     const value = e.target.value;
+    // Validasi hanya angka
+    if (!/^\d*$/.test(value)) {
+      setError("Code must contain only numbers.");
+      return;
+    }
+    setError("");
+
     if (value.length <= 1) {
       const newCode = [...code];
       newCode[index] = value;
@@ -68,7 +75,6 @@ export default function EnterCode({ userEmail }) {
                   onChange={(e) => handleChange(e, index)}
                 />
               ))}
-              
             </div>
             <div className="flex flex-row space-x-2 my-10 justify-center items-center font-light ">
               <h1 className="flex justify-center mb-6">
