@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import BackgroundImage from "../assets/background.png";
 import EmailIcon from "../assets/icons/email.png";
 import PasswordIcon from "../assets/icons/password.png";
+import { useNavigate, Link } from "react-router-dom";
 import Logo from "../assets/logo.png";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,6 +20,7 @@ export default function Login() {
     setError("");
     // Proceed with form submission
     console.log("Form submitted successfully!");
+    navigate("/login")
   };
 
   return (
@@ -53,7 +56,9 @@ export default function Login() {
                   <input className="w-full py-2 px-5  text-gray-700 focus:outline-none" id="password" type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} maxLength={8} />
                 </div>
                 <div className="flex justify-end">
-                  <button className="text-[#728969] font-bold">Forgot Password?</button>
+                  <Link to={"/forgot_password"}>
+                    <button className="text-[#728969] font-bold">Forgot Password?</button>
+                  </Link>
                 </div>
               </div>
               <div className="flex items-center justify-center">
@@ -66,7 +71,9 @@ export default function Login() {
               <h1 className="text-black text-[20px]">
                 Don’t have an account?
               </h1>
-              <button className="text-[#728969] font-bold">Sign Up</button>
+              <Link to={'/signup'}>
+                <button className="text-[#728969] font-bold">Sign Up</button>
+              </Link>
             </div>
           </div>
         </div>

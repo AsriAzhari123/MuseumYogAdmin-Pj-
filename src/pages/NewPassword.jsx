@@ -3,6 +3,8 @@ import BackgroundImage from "../assets/background.png";
 import EmailIcon from "../assets/icons/email.png";
 import PasswordIcon from "../assets/icons/password.png";
 import Logo from "../assets/logo.png";
+import { useNavigate  } from "react-router-dom";
+
 
 // NewPassword component with form for password, confirm password
 
@@ -10,6 +12,7 @@ export default function NewPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,6 +26,7 @@ export default function NewPassword() {
     }
     setError("");
     // Proceed with form submission
+    navigate("/login")
     console.log("Password set successfully!");
   };
 
@@ -40,7 +44,6 @@ export default function NewPassword() {
           <h1 className="text-center mt-5 mb-4 font-bold text-[24px]">Set New Password</h1>
           {/* Centered Paragraph */}
           <div className="flex justify-center mb-6">
-            <p className="text-gray-600">Password must be exactly 8 characters long.</p>
           </div>
           {/* Error Message */}
           {error && <p className="text-red-500 mb-6 text-center">{error}</p>}
@@ -81,9 +84,9 @@ export default function NewPassword() {
               </div>
             </div>
             <div className="flex items-center justify-center">
-              <button className="bg-[#728969] hover:bg-[#728969] text-white font-bold w-full py-4 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                Set new password
-              </button>
+                <button className="bg-[#728969] hover:bg-[#728969] text-white font-bold w-full py-4 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                  Set new password
+                </button>
             </div>
           </form>
         </div>

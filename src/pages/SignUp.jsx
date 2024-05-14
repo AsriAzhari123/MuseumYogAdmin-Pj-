@@ -3,6 +3,7 @@ import BackgroundImage from "../assets/background.png";
 import EmailIcon from "../assets/icons/email.png";
 import PasswordIcon from "../assets/icons/password.png";
 import Logo from "../assets/logo.png";
+import { Link, useNavigate } from "react-router-dom";
 
 // SignUp component with form for email, name, museum, phone number, and password
 export default function SignUp() {
@@ -89,12 +90,14 @@ export default function SignUp() {
               </button>
             </div>
           </form>
-          <div className="flex flex-row space-x-2 my-10 justify-center items-center font-light">
-            <h1 className="text-black text-[20px]">
-              Already have an account?
-            </h1>
-            <button className="text-[#728969] font-bold">Login</button>
-          </div>
+          <div className="flex flex-row space-x-2 my-10 justify-center items-center font-light ">
+              <h1 className="text-black text-[20px]">
+                Alredy have an account?
+              </h1>
+              <Link to={'/login'}>
+                <button className="text-[#728969] font-bold">Login</button>
+              </Link>
+            </div>
         </div>
       </div>
     </div>

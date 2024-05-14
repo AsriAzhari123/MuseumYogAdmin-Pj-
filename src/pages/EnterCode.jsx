@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import BackgroundImage from "../assets/background.png";
 import Logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
+
 
 // Input code with larger individual boxes
 export default function EnterCode({ userEmail }) {
@@ -8,6 +10,7 @@ export default function EnterCode({ userEmail }) {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const inputRefs = useRef([]);
+  const navigate = useNavigate();
 
   const handleChange = (e, index) => {
     const value = e.target.value;
@@ -39,6 +42,7 @@ export default function EnterCode({ userEmail }) {
       return;
     }
     setMessage("Code submitted successfully!");
+    navigate("/new_password")
   };
 
   return (
@@ -83,9 +87,9 @@ export default function EnterCode({ userEmail }) {
               <button className="flex justify-center mb-6 font-semibold">Resend The Code</button>
             </div>
             <div className="flex items-center justify-center">
-              <button className="bg-[#728969] hover:bg-[#728969] text-white font-bold w-full py-4 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                Continue
-              </button>
+                <button className="bg-[#728969] hover:bg-[#728969] text-white font-bold w-full py-4 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                  Continue
+                </button>
             </div>
           </form>
         </div>
