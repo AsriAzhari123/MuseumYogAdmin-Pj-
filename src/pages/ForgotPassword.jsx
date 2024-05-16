@@ -4,7 +4,7 @@ import EmailIcon from "../assets/icons/email.png";
 import Logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 
-// Mock function to simulate sending an email
+
 const sendResetCode = async (email) => {
   // Simulating API call to send the reset code
   return new Promise((resolve, reject) => {
@@ -25,7 +25,6 @@ export default function ForgotPassword() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -33,7 +32,9 @@ export default function ForgotPassword() {
     try {
       const response = await sendResetCode(email);
       setMessage(response);
-      navigate("/code_verification")
+      setTimeout(() => {
+        navigate("/code_verification");
+      }, 2000);
     } catch (err) {
       setError(err);
     }
@@ -75,9 +76,9 @@ export default function ForgotPassword() {
               </div>
             </div>
             <div className="flex items-center justify-center">
-                <button className="bg-[#728969] hover:bg-[#728969] text-white font-bold w-full py-4 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                  Send Code
-                </button>
+              <button className="bg-[#728969] hover:bg-[#728969] text-white font-bold w-full py-4 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                Send Code
+              </button>
             </div>
           </form>
         </div>

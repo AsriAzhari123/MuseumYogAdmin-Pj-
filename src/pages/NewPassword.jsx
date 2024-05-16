@@ -5,9 +5,6 @@ import PasswordIcon from "../assets/icons/password.png";
 import Logo from "../assets/logo.png";
 import { useNavigate  } from "react-router-dom";
 
-
-// NewPassword component with form for password, confirm password
-
 export default function NewPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -25,7 +22,7 @@ export default function NewPassword() {
       return;
     }
     setError("");
-    // Proceed with form submission
+
     navigate("/login")
     console.log("Password set successfully!");
   };

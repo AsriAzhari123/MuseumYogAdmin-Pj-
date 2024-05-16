@@ -5,6 +5,11 @@ import PasswordIcon from "../assets/icons/password.png";
 import { useNavigate, Link } from "react-router-dom";
 import Logo from "../assets/logo.png";
 
+const dummyUser = {
+  email: "test@example.com",
+  password: "password" 
+};
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,28 +18,27 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password.length !== 8) {
-      setError("Password must be exactly 8 characters long.");
-      return;
+  
+    if (email === dummyUser.email && password === dummyUser.password) {
+      setError("");
+      console.log("Form submitted successfully!");
+      navigate("/dashboard", { replace: true }); // Use replace to prevent back navigation
+    } else {
+      setError("Invalid email or password.");
     }
-    setError("");
-    // Proceed with form submission
-    console.log("Form submitted successfully!");
-    navigate("/login")
   };
 
   return (
     <>
       <div 
-        className="bg-scroll h-screen bg-no-repeat bg-cover" 
+        className="bg-scroll bg-no-repeat bg-cover min-h-screen flex flex-col justify-center" 
         style={{
           backgroundImage: `url(${BackgroundImage})`
         }} 
       >
-        <img src={Logo} alt="logo" className="m-10 justify-start"/>
-
+        <img src={Logo} alt="logo" className="m-10 self-start"/>
         <div className="flex justify-center items-center">
-          <div className="w-[750px] bg-white p-10 rounded-[8px] shadow-[0px_8px_28px_0px_rgba(0,0,0,0.10)]">
+          <div className="w-[750px] bg-white mb-[50px] p-10 rounded-[8px] shadow-[0px_8px_28px_0px_rgba(0,0,0,0.10)]">
             <h1 className="text-center mt-5 mb-10 font-bold text-[24px]">Welcome Back</h1>
             {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
             <form className="rounded space-y-9" onSubmit={handleSubmit}>
@@ -44,7 +48,7 @@ export default function Login() {
                 </label>
                 <div className="flex items-center border border-gray-400 rounded w-full h-[50px]">
                   <img src={EmailIcon} alt="email-icon" className="ml-[20px]" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} />
-                  <input className="w-full py-2 px-5  text-gray-700 focus:outline-none" id="email" type="text" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <input className="w-full py-2 px-5 text-gray-700 focus:outline-none" id="email" type="text" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
               </div>
               <div className="mb-6 space-y-3">
@@ -53,7 +57,7 @@ export default function Login() {
                 </label>
                 <div className="flex items-center border border-gray-400 rounded w-full h-[50px]">
                   <img src={PasswordIcon} alt="password-icon" className="ml-[20px]" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} />
-                  <input className="w-full py-2 px-5  text-gray-700 focus:outline-none" id="password" type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} maxLength={8} />
+                  <input className="w-full py-2 px-5 text-gray-700 focus:outline-none" id="password" type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className="flex justify-end">
                   <Link to={"/forgot_password"}>

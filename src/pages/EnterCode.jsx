@@ -2,19 +2,19 @@ import React, { useState, useRef } from "react";
 import BackgroundImage from "../assets/background.png";
 import Logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-
-// Input code with larger individual boxes
 export default function EnterCode({ userEmail }) {
   const [code, setCode] = useState(["", "", "", ""]);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [resendMessage, setResendMessage] = useState("");
   const inputRefs = useRef([]);
   const navigate = useNavigate();
 
   const handleChange = (e, index) => {
     const value = e.target.value;
-    // Validasi hanya angka
+    // Validate only numbers
     if (!/^\d*$/.test(value)) {
       setError("Code must contain only numbers.");
       return;
@@ -42,7 +42,12 @@ export default function EnterCode({ userEmail }) {
       return;
     }
     setMessage("Code submitted successfully!");
-    navigate("/new_password")
+    navigate("/new_password");
+  };
+
+  const handleResendCode = () => {
+    setResendMessage("Code resent successfully!");
+    setTimeout(() => setResendMessage(""), 3000);
   };
 
   return (
@@ -57,15 +62,12 @@ export default function EnterCode({ userEmail }) {
       <div className="flex flex-grow justify-center items-center w-full">
         <div className="w-[750px] bg-white p-10 rounded-[8px] shadow-[0px_8px_28px_0px_rgba(0,0,0,0.10)]">
           <h1 className="text-center mt-5 mb-4 font-bold text-[24px]">Enter Code</h1>
-          {/* Centered Paragraph */}
           <div className="flex justify-center mb-6">
             <p className="text-gray-600">We sent a code to your email {userEmail}</p>
           </div>
-          {/* Error Message */}
           {error && <p className="text-red-500 mb-6 text-center">{error}</p>}
-          {/* Success Message */}
           {message && <p className="text-green-500 mb-6 text-center">{message}</p>}
-          {/* Form */}
+          {resendMessage && <p className="text-green-500 mb-6 text-center">{resendMessage}</p>}
           <form className="space-y-9" onSubmit={handleSubmit}>
             <div className="flex justify-center space-x-3 mb-4">
               {code.map((value, index) => (
@@ -80,16 +82,23 @@ export default function EnterCode({ userEmail }) {
                 />
               ))}
             </div>
-            <div className="flex flex-row space-x-2 my-10 justify-center items-center font-light ">
-              <h1 className="flex justify-center mb-6">
-                Didn't receive the code?
-              </h1>
-              <button className="flex justify-center mb-6 font-semibold">Resend The Code</button>
+            <div className="flex flex-row space-x-2 my-10 justify-center items-center font-light">
+              <h1 className="flex justify-center mb-6">Didn't receive the code?</h1>
+              <button
+                type="button"
+                className="flex justify-center mb-6 font-semibold"
+                onClick={handleResendCode}
+              >
+                Resend The Code
+              </button>
             </div>
             <div className="flex items-center justify-center">
-                <button className="bg-[#728969] hover:bg-[#728969] text-white font-bold w-full py-4 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                  Continue
-                </button>
+              <button
+                className="bg-[#728969] hover:bg-[#728969] text-white font-bold w-full py-4 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
+              >
+                Continue
+              </button>
             </div>
           </form>
         </div>
