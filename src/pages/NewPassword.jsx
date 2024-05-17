@@ -41,6 +41,8 @@ export default function NewPassword() {
           <h1 className="text-center mt-5 mb-4 font-bold text-[24px]">Set New Password</h1>
           {/* Centered Paragraph */}
           <div className="flex justify-center mb-6">
+            <p className="text-gray-600">Must be at least 8 characters.
+            </p>
           </div>
           {/* Error Message */}
           {error && <p className="text-red-500 mb-6 text-center">{error}</p>}
