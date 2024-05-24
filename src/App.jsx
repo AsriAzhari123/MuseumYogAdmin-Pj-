@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, createBrowserRouter, RouterProvider } from "react-router-dom";
-import { EnterCode, ForgotPassword, Login, NewPassword, SignUp, CmsPage, Dashboard} from "./pages";
+import { EnterCode, ForgotPassword, Login, NewPassword, SignUp, CmsPage, Dashboard, EditInformationScreen, AddInformationScreen, EventOverview, MuseumCollection, SettingEvent, ReviewScreen, TicketScreen, EditEventScreen, AddEventScreen, ReportEvent, AddReport, EditReport, } from "./pages";
 
 // Define routes with the correct redirection for the root path
 const router = createBrowserRouter([
@@ -11,7 +11,20 @@ const router = createBrowserRouter([
   { path: "code_verification", element: <EnterCode /> },
   { path: "new_password", element: <NewPassword /> },
   { path: "dashboard", element: <Dashboard />},
-  { path: "cms_page", element: <CmsPage />}
+  { path: "cms", element: <CmsPage />},
+  { path: "edit_information", element: <EditInformationScreen />},
+  { path: "add_information", element: <AddInformationScreen />},
+  { path: "events", element: <EventOverview />},
+  { path: "ticket", element: <TicketScreen />},
+  { path: "museum_collection", element: <MuseumCollection /> },
+  { path: "setting_event", element: <SettingEvent /> },
+  { path: "*", element: <Navigate to="/" /> },
+  { path: "review", element: <ReviewScreen />},
+  { path: "edit_event", element: <EditEventScreen />},
+  { path: "add_event", element: <AddEventScreen />},
+  { path: "report_event", element: <ReportEvent />},
+  { path: "add_report", element: <AddReport />},
+  { path: "edit_report", element: <EditReport />},
 ]);
 
 export default function App() {

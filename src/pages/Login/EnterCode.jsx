@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
-import BackgroundImage from "../assets/background.png";
-import Logo from "../assets/logo.png";
+import BackgroundImage from "/src/assets/background.png";
+import Logo from "/src/assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -59,7 +59,7 @@ export default function EnterCode({ userEmail }) {
     >
       <img src={Logo} alt="logo" className="m-10 self-start" />
 
-      <div className="flex flex-grow justify-center items-center w-full">
+      <div className="flex flex-grow justify-center items-center w-full mb-10">
         <div className="w-[750px] bg-white p-10 rounded-[8px] shadow-[0px_8px_28px_0px_rgba(0,0,0,0.10)]">
           <h1 className="text-center mt-5 mb-4 font-bold text-[24px]">Enter Code</h1>
           <div className="flex justify-center mb-6">
@@ -93,12 +93,14 @@ export default function EnterCode({ userEmail }) {
               </button>
             </div>
             <div className="flex items-center justify-center">
-              <button
-                className="bg-[#728969] hover:bg-[#728969] text-white font-bold w-full py-4 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Continue
-              </button>
+              <Link to={'/new_password'}>
+                <button
+                  className="bg-[#728969] hover:bg-[#728969] text-white font-bold w-full py-4 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="submit"
+                >
+                  Continue
+                </button>
+              </Link>
             </div>
           </form>
         </div>

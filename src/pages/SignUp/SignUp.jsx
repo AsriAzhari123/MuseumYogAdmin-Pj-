@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import BackgroundImage from "../assets/background.png";
-import EmailIcon from "../assets/icons/email.png";
-import PasswordIcon from "../assets/icons/password.png";
-import ProfileIcon from "../assets/icons/profile.png";
-import AlertIcon from "../assets/icons/danger.png";
-import PhoneIcon from "../assets/icons/phone.png";
-import Logo from "../assets/logo.png";
+import BackgroundImage from "/src/assets/background.png";
+import EmailIcon from "/src/assets/icons/email.png";
+import PasswordIcon from "/src/assets/icons/password.png";
+import ProfileIcon from "/src/assets/icons/profile.png";
+import AlertIcon from "/src/assets/icons/danger.png";
+import PhoneIcon from "/src/assets/icons/phone.png";
+import Logo from "/src/assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 
 

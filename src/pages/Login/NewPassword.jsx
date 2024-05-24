@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import BackgroundImage from "../assets/background.png";
-import EmailIcon from "../assets/icons/email.png";
-import PasswordIcon from "../assets/icons/password.png";
-import Logo from "../assets/logo.png";
+import BackgroundImage from "/src/assets/background.png";
+import EmailIcon from "/src/assets/icons/email.png";
+import PasswordIcon from "/src/assets/icons/password.png";
+import Logo from "/src/assets/logo.png";
 import { useNavigate  } from "react-router-dom";
 
 export default function NewPassword() {
