@@ -8,7 +8,7 @@ import Calender from "../../src/assets/icons/Calendar.png";
 
 const EditInfoEvent = () => {
     const [EventName, setEventName] = useState("");
-    const [EventImage, setEventImage] = useState(null);
+    const [EventPicture, setEventPicture] = useState(null);
     const [EventDesc, setEventDesc] = useState("");
     const [EventStartDate, setEventStartDate] = useState("");
     const [EventEndDate, setEventEndDate] = useState("");
@@ -17,6 +17,15 @@ const EditInfoEvent = () => {
 
     const handleEventName = (e) => {
         setEventName(e.target.value);
+    };
+
+    const handlePictureChange = (e) => {
+        if (e.target.files.length > 0) {
+            const file = e.target.files[0];
+            setEventPicture(URL.createObjectURL(file));
+        } else {
+            setEventPicture(null);
+        }
     };
 
     const handleEventDesc = (e) => {
@@ -39,9 +48,7 @@ const EditInfoEvent = () => {
         setEventPrice(e.target.value);
     };
 
-    const handleEventImage = (e) => {
-        setEventImage(URL.createObjectURL(e.target.files[0]));
-    };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -52,7 +59,8 @@ const EditInfoEvent = () => {
             EventStartDate,
             EventEndDate,
             EventPrice,
-            EventImage,
+            EventPicture,
+           
         });
         // You can add logic to save this data to a database or backend server here
     };
@@ -92,17 +100,38 @@ const EditInfoEvent = () => {
                             <h1 className="text-[#505050] font-bold text-[24px]">
                                 Add Event Picture
                             </h1>
-                            <div className="flex items-center justify-center border border-[#728969] rounded-md w-[200px] h-[200px] relative">
-                                {EventImage ? (
-                                    <img src={EventImage} alt="Event" className="w-full h-full object-cover rounded-md"/>
-                                ) : (
-                                    <img src={ImageIcon} alt="Placeholder" className="w-[50px] h-[50px]" />
-                                )}
-                                <input
-                                    type="file"
-                                    className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                                    onChange={handleEventImage}
+                            <div className="flex flex-col items-center justify-center py-[40px] w-full max-h-[400px] border border-[#728969] rounded-md">
+                                <input 
+                                    type="file" 
+                                    id="file-input" 
+                                    className="hidden" 
+                                    accept="image/*" 
+                                    onChange={handlePictureChange}
                                 />
+                                {EventPicture ? (
+                                        <div className="flex flex-col items-center space-y-4">
+                                            <img src={EventPicture} alt="Preview" className="w-full max-w-xs h-[300px] rounded-md" />
+                                        <button 
+                                            onClick={() => {
+                                                setEventPicture(null)
+                                            }}
+                                            className="bg-[#728969] text-white py-2 px-4 rounded-md transition duration-300"
+                                        >
+                                            Remove
+                                        </button>
+                                    </div>
+                                ) : (
+                                        <label 
+                                            htmlFor="file-input" 
+                                            className="flex flex-col justify-center items-center space-y-4 cursor-pointer"
+                                        >
+                                        <img src={AddIcon} alt="Add Icon" />
+                                        <div className="flex flex-row justify-center items-center space-x-2">
+                                            <img src={ImageIcon} alt="Image Icon" />
+                                            <p className="text-[#728969]">browse jpeg/png</p>
+                                        </div>
+                                    </label>
+                                )}
                             </div>
                         </div>
 

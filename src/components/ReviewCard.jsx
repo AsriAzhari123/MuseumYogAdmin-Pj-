@@ -6,7 +6,7 @@ const ReviewCard = ({reviewData, onReply}) => {
     const totalBintang = parseInt(reviewData.totalBintang);
 
     return (
-        <div className='flex flex-col shadow-custom-shadow py-10 px-8 border border-[#718768] rounded space-y-5'>
+        <div className='flex flex-col shadow-custom-shadow py-10 px-8 rounded space-y-5'>
             <div className='flex flex-row space-x-5 items-top '>
                 <img src={reviewData.image} alt="" className='w-[100px] h-[100px] rounded-full'/>
                 <div className='flex flex-col justify-start items-top space-y-3' >

@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, createBrowserRouter, RouterProvider } from "react-router-dom";
-import { EnterCode, ForgotPassword, Login, NewPassword, SignUp, CmsPage, Dashboard, EditInformationScreen, AddInformationScreen, EventOverview, MuseumCollection, SettingEvent, ReviewScreen, TicketScreen, EditEventScreen, AddEventScreen, ReportEvent, AddReport, EditReport, } from "./pages";
+import { EnterCode, ForgotPassword, Login, NewPassword, SignUp, CmsPage, Dashboard, EditInformationScreen, AddInformationScreen, EventOverview, MuseumCollection, SettingEvent, ReviewScreen, TicketScreen, EditEventScreen, AddEventScreen, ReportEvent, AddReport, EditReport, ProfileScreen, EditProfileScreen} from "./pages";
 
 // Define routes with the correct redirection for the root path
 const router = createBrowserRouter([
@@ -25,6 +25,8 @@ const router = createBrowserRouter([
   { path: "report_event", element: <ReportEvent />},
   { path: "add_report", element: <AddReport />},
   { path: "edit_report", element: <EditReport />},
+  { path: "profile", element: <ProfileScreen />},
+  { path: "edit_profile", element: <EditProfileScreen />}
 ]);
 
 export default function App() {

@@ -3,6 +3,8 @@ import Navbar from "../../components/navbar";
 import Sidebar from "../../components/sidebar";
 import UserSampleAccount from "../../dataSample/UserAccount";
 import TicketOverview from "./TicketOverview";
+import SettingTicket from "./TicketSetting";
+import TicketReport from "./ReportTicket";
 
 
 const TicketScreen = () => {
@@ -25,21 +27,21 @@ const TicketScreen = () => {
                 <div className="flex">
                     <Sidebar />
                     <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden px-10 space-y-5 bg-[#F8F8F8] h-screen">
-                        <div className="flex flex-row items-center space-x-5 text-start ml-[260px] mt-[120px] border-b-4 border-gray-300">
+                        <div className="flex flex-row items-center space-x-5 text-start ml-[260px] mt-[120px] border-b border-gray-300">
                             <h1
-                                className={`text-[20px] font-bold cursor-pointer pb-6 relative w-[200px] ${activeTab === 'overview' ? 'border-b-4 border-[#728969] text-[#728969] top-[4px]' : ''}`}
+                                className={`cursor-pointer ${activeTab === 'overview' ? 'px-4 py-2 text-green-700 border-b-2 border-green-700' : 'px-4 py-2 text-gray-600'}`}
                                 onClick={() => handleTabChange('overview')}
                             >
                                 Overview
                             </h1>
                             <h1
-                                className={`text-[20px] font-bold cursor-pointer pb-6 relative w-[200px] ${activeTab === 'setting' ? 'border-b-4 border-[#728969] text-[#728969] top-[4px]' : ''}`}
+                                className={`cursor-pointer ${activeTab === 'setting' ? 'px-4 py-2 text-green-700 border-b-2 border-green-700' : 'px-4 py-2 text-gray-600'}`}
                                 onClick={() => handleTabChange('setting')}
                             >
                                 Setting Event
                             </h1>
                             <h1
-                                className={`text-[20px] font-bold cursor-pointer pb-6 relative w-[200px] ${activeTab === 'report' ? 'border-b-4 border-[#728969] text-[#728969] top-[4px]' : ''}`}
+                                className={`cursor-pointer ${activeTab === 'report' ? 'px-4 py-2 text-green-700 border-b-2 border-green-700' : 'px-4 py-2 text-gray-600'}`}
                                 onClick={() => handleTabChange('report')}
                             >
                                 Report
@@ -47,6 +49,8 @@ const TicketScreen = () => {
                         </div>
                         <div className="content">
                             {activeTab === 'overview' && <TicketOverview />}
+                            {activeTab === 'setting' && <SettingTicket />}
+                            {activeTab == 'report' && <TicketReport />}
                         </div>
                     </div>
                 </div>

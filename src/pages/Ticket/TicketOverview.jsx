@@ -29,10 +29,6 @@ const TicketOverview = () => {
     setSelectedDate(e.target.value);
   };
 
-  const handleIconClick = () => {
-    dateInputRef.current.focus();
-  };
-
   const handleSearchChange = (e) => {
     setSearchName(e.target.value)
   }

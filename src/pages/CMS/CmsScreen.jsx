@@ -56,15 +56,15 @@ const CmsScreen = () => {
                 <div className="flex">
                     <Sidebar />
                     <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden px-10 space-y-5 bg-[#F8F8F8]">
-                        <div className="grid grid-cols-2 text-center ml-[260px] mt-[120px] border-b-4 border-gray-300">
+                        <div className="grid grid-cols-2 text-center ml-[260px] mt-[120px] flex border-b border-gray-300">
                             <h1
-                                className={`text-[24px] font-bold cursor-pointer pb-6 relative ${activeTab === 'information' ? 'border-b-4 border-[#728969] text-[#728969] top-[4px]' : ''}`}
+                                className={`cursor-pointer ${activeTab === 'information' ? 'px-4 py-2 text-green-700 border-b-2 border-green-700' : 'px-4 py-2 text-gray-600'}`}
                                 onClick={() => handleTabChange('information')}
                             >
                                 Museum Information
                             </h1>
                             <h1
-                                className={`text-[24px] font-bold cursor-pointer pb-6 relative ${activeTab === 'collection' ? 'border-b-4 border-[#728969] text-[#728969] top-[4px]' : ''}`}
+                                className={`cursor-pointer ${activeTab === 'collection' ? 'px-4 py-2 text-green-700 border-b-2 border-green-700' : 'px-4 py-2 text-gray-600'}`}
                                 onClick={() => handleTabChange('collection')}
                             >
                                 Museum Collection

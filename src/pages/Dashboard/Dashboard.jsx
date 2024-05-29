@@ -137,7 +137,7 @@ export default function Dashboard() {
                 </div>
               ))}
             </div>
-            <div className="bg-white p-4 rounded-lg shadow-md">
+            <div className="bg-white p-4 rounded-lg shadow-custom-shadow">
               <h2 className="text-lg font-semibold mb-2">Event Composition</h2>
               <div className="h-64">
                 <DiagramLingkaran />

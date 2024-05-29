@@ -66,7 +66,7 @@ export default function EventOverview() {
       />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        <div className="flex-1 p-4 overflow-y-auto ml-[280px] mt-16 pt-10">
+        <div className="flex-1 p-4 overflow-y-auto ml-[280px] mt-16 pt-10 bg-[#F8F8F8]">
           <Tab />
           <h1 className="text-2xl font-bold pl-3 pt-5">Events</h1>
           <div className="flex space-x-4 pl-3 pt-3">
@@ -81,22 +81,22 @@ export default function EventOverview() {
             ))}
           </div>
           <div className="flex items-center mt-5 space-x-4 pl-2">
-            <select className="px-4 py-2 border rounded">
+            <select className="px-4 py-2 border rounded shadow-custom-shadow">
               <option value="">Bulk Action</option>
               <option value="delete">Delete</option>
               <option value="archive">Archive</option>
               {/* Add more options as needed */}
             </select>
-            <button className="px-4 py-2 border rounded">Apply</button>
-            <select className="px-4 py-2 border rounded">
-            <option value="">Filter</option>
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-        </select>
+            <button className="px-4 py-2 border rounded shadow-custom-shadow bg-white">Apply</button>
+            <select className="px-4 py-2 border rounded shadow-custom-shadow">
+              <option value="">Filter</option>
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
           </div>
           <div className="mt-5 space-y-4 pl-2">
             {filteredEvents.map((event, index) => (
-              <div key={index} className="flex items-start p-4 border rounded-lg shadow-sm space-x-4">
+              <div key={index} className="flex items-start p-4 rounded-lg shadow-custom-shadow space-x-4">
                 <img
                   src={event.image}
                   alt={event.name}
