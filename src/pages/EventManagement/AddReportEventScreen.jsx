@@ -1,13 +1,37 @@
 import Navbar from "../../components/navbar"
 import Sidebar from "../../components/sidebar"
-import users from "../../dataSample/UserAccount"
 import AddReportEvent from "../../components/AddReportEvent"
+import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddReportScreen = () => {
+
+    const [currentUser, setCurrentUser] = useState({});
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const token = localStorage.getItem('token');
+          const response = await axios.get('http://localhost:3000/auth/currentUser', {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          setCurrentUser(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+  
+      fetchUser();
+    }, [navigate]);
+      
     return (
         <>
             <div className="flex flex-col h-screen">
-                <Navbar user={users[1]} className="h-16 bg-gray-800 text-white flex items-center px-4" />
+                <Navbar user={currentUser} className="h-16 bg-gray-800 text-white flex items-center px-4" />
                 <div className="flex flex-1 overflow-hidden">
                     <Sidebar />
                     <AddReportEvent />

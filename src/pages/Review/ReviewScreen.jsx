@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/navbar';
 import Sidebar from '../../components/sidebar';
-import UserSampleAccount from "../../dataSample/UserAccount";
 import ReviewCard from '../../components/ReviewCard';
 import ReviewData from '../../dataSample/ReviewData';
 import ReplyForm from '../../components/ReplyForm';
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const ReviewScreen = () => {
     const [isReply, setIsReply] = useState(false);
+    const [currentUser, setCurrentUser] = useState({});
+    const navigate = useNavigate();
 
     const handleReply = () => {
         setIsReply(true);
@@ -16,11 +19,29 @@ const ReviewScreen = () => {
     const doneReply = () => {
         setIsReply(false);
     }
+    
+    useEffect(() => {
+        const fetchUser = async () => {
+          try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get('http://localhost:3000/auth/currentUser', {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            });
+            setCurrentUser(response.data);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+    
+        fetchUser();
+      }, [navigate]);
 
     return (
         <>
            <div className='flex flex-col h-screen'>
-                <Navbar user={UserSampleAccount[0]}/>
+           <Navbar user={currentUser} />
                 <Sidebar />
                 <div className='flex flex-col flex-1 overflow-y-auto overflow-x-hidden px-10 space-y-5'>
                     <div className='flex flex-col justify-start ml-[260px] mt-[120px] mb-[100px] space-y-5'>

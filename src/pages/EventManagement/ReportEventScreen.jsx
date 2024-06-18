@@ -1,26 +1,12 @@
-import React, { useState } from "react";
+import axios from 'axios';
+import React, { useState, useEffect } from "react";
 import Tab from "../../components/Tabs";
 import Navbar from "../../components/navbar";
 import Sidebar from "../../components/sidebar";
-import users from "../../dataSample/UserAccount";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const currentUser = users[1];
 
-const events = [
-    {
-        image:
-            "https://th.bing.com/th/id/OIP.4Nb7RV7udINo1zsxbyIU9wHaE8?rs=1&pid=ImgDetMain",
-        name: "Event Name",
-        deskname: "Workshop Membatik",
-        titleDesk: "Event Description",
-        description:
-            "Dalam Event ini anda akan diajak untuk belajar teknik-teknik membatik, mulai dari menyiapkan kain hingga menciptakan pola dan warna yang unik.",
-        titleDate: "Event Date",
-        date: "02 Mei 2024 - 28 Mei 2024",
-        category: "Trash",
-    },
-];
 
 const participantData = [
     {
@@ -49,6 +35,9 @@ const participantData = [
 export default function ReportEvent() {
     const [activeTab, setActiveTab] = useState("All");
     const [selectedDate, setSelectedDate] = useState('');
+    const [currentUser, setCurrentUser] = useState({});
+    const navigate = useNavigate();
+    const [events, setEvents] = useState([]);
 
     const handleDateChange = (e) => {
         setSelectedDate(e.target.value);
@@ -65,6 +54,55 @@ export default function ReportEvent() {
         activeTab === "All"
             ? events
             : events.filter((event) => event.category === activeTab);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get('http://localhost:3000/auth/currentUser', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                setCurrentUser(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchUser();
+    }, [navigate]);
+
+    useEffect(() => {
+        fetchEvents();
+    }, []);
+
+    const fetchEvents = () => {
+        axios.get('http://localhost:3000/events', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        }).then(response => {
+            setEvents(response.data);
+        }).catch(error => {
+            console.error(error);
+        });
+    };
+
+    const handleDelete = (id) => {
+        if (window.confirm("Are you sure you want to delete this event?")) {
+            axios.delete(`http://localhost:3000/events/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then(() => {
+                fetchEvents();
+            }).catch(error => {
+                console.error("An error occurred while deleting the event:", error);
+            });
+        }
+    };
+
 
     return (
         <div className="h-screen flex flex-col">
@@ -126,53 +164,48 @@ export default function ReportEvent() {
                         {filteredEvents.map((event, index) => (
                             <div
                                 key={index}
-                                className="flex items-start p-4 border rounded-lg shadow-sm space-x-4 bg-white shadow-custom-shadow"
+                                className="flex items-start p-4 rounded-lg shadow-custom-shadow space-x-4 bg-white"
                             >
                                 <img
-                                    src={event.image}
-                                    alt={event.name}
+                                    src={`http://localhost:3000/uploads/${event.event_picture}`}
+                                    alt={event.event_name}
                                     className="w-36 h-36 object-cover rounded-lg"
+                                    onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/150'; }} // Fallback image
                                 />
                                 <div className="flex-1 flex flex-col space-y-2">
                                     <div className="flex flex-row space-x-4">
                                         <div className="flex-1">
-                                            <span className="text-lg font-bold block">
-                                                {event.name}
-                                            </span>
-                                            <p className="text-sm text-gray-600 pt-2">
-                                                {event.deskname}
-                                            </p>
+                                            <span className="text-lg font-bold block">Event Name</span>
+                                            <p className="text-sm text-gray-600 pt-5">{event.event_name}</p>
                                         </div>
                                         <div className="flex-1">
-                                            <span className="text-lg font-bold block">
-                                                {event.titleDesk}
-                                            </span>
-                                            <p className="text-sm text-gray-600 break-words pt-2">
-                                                {event.description}
-                                            </p>
+                                            <span className="text-lg font-bold block">Event Description</span>
+                                            <p className="text-sm text-gray-600 break-words pt-5">{event.event_description}</p>
                                         </div>
                                         <div className="flex-1">
-                                            <span className="text-lg font-bold block">
-                                                {event.titleDate}
-                                            </span>
-                                            <p className="text-sm text-gray-600 break-words pt-2">
-                                                {event.date}
+                                            <span className="text-lg font-bold block">Event Date</span>
+                                            <p className="text-sm text-gray-600 break-words pt-5">
+                                                {new Date(event.event_date_start).toLocaleDateString()} - {new Date(event.event_date_end).toLocaleDateString()}
                                             </p>
                                         </div>
                                         <div className="flex-1">
                                             <span className="text-lg font-bold block">Action</span>
                                             <div className="flex space-x-2 mt-2 pt-2">
-                                                <Link to="/edit_report">
+                                                <Link to={`/edit_report/${event.id}`}>
                                                     <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                                                         Edit
                                                     </button>
                                                 </Link>
                                             </div>
                                             <div className="flex space-x-2 mt-2 pt-1">
-                                                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">
+                                                <button
+                                                    onClick={() => handleDelete(event.id)}
+                                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline"
+                                                >
                                                     Delete
                                                 </button>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>

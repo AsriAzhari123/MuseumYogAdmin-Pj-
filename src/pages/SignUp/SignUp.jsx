@@ -7,11 +7,7 @@ import AlertIcon from "/src/assets/icons/danger.png";
 import PhoneIcon from "/src/assets/icons/phone.png";
 import Logo from "/src/assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-
-
-const dummyUsers = [
-  { email: "existinguser@example.com", password: "password", name: "John Doe", museum: "Art Museum", phone: "1234567890" }
-];
+import axios from 'axios';
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -22,27 +18,27 @@ export default function SignUp() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-   
-    if (dummyUsers.some(user => user.email === email)) {
-      setError("Email is already in use.");
-      return;
-    }
-
-    if (password.length !== 8) {
-      setError("Password must be exactly 8 characters long.");
-      return;
-    }
-
-
-    dummyUsers.push({ email, password, name, museum, phone });
     setError("");
-    console.log("Form submitted successfully!", dummyUsers);
 
-
-    navigate("/login");
+    try {
+      const response = await axios.post('http://localhost:3000/auth/register', {
+        email: email,
+        username: name,
+        password: password,
+        museum: museum,
+        phone: phone
+      });
+      console.log("Form submitted successfully!", response.data);
+      navigate("/login");
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        setError(error.response.data.error);
+      } else {
+        setError("An error occurred during registration.");
+      }
+    }
   };
 
   return (
@@ -78,21 +74,21 @@ export default function SignUp() {
               </div>
             </div>
             <div className="mb-4 space-y-3">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="museum">
-                Museum
-              </label>
-              <div className="flex items-center border border-gray-400 rounded w-full h-[50px]">
-                <img src={AlertIcon} alt="museum-icon" className="ml-[20px]" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} />
-                <input className="w-full py-2 px-5 text-gray-700 focus:outline-none" id="museum" type="text" placeholder="Enter your museum" value={museum} onChange={(e) => setMuseum(e.target.value)}/>
-              </div>
-            </div>
-            <div className="mb-4 space-y-3">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
-                Phone Number
+                Phone
               </label>
               <div className="flex items-center border border-gray-400 rounded w-full h-[50px]">
                 <img src={PhoneIcon} alt="phone-icon" className="ml-[20px]" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} />
                 <input className="w-full py-2 px-5 text-gray-700 focus:outline-none" id="phone" type="text" placeholder="Enter your phone number" value={phone} onChange={(e) => setPhone(e.target.value)}/>
+              </div>
+            </div>
+            <div className="mb-4 space-y-3">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="museum">
+                Museum Name
+              </label>
+              <div className="flex items-center border border-gray-400 rounded w-full h-[50px]">
+                <img src={AlertIcon} alt="museum-icon" className="ml-[20px]" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} />
+                <input className="w-full py-2 px-5 text-gray-700 focus:outline-none" id="museum" type="text" placeholder="Enter your museum name" value={museum} onChange={(e) => setMuseum(e.target.value)}/>
               </div>
             </div>
             <div className="mb-6 space-y-3">
@@ -101,7 +97,7 @@ export default function SignUp() {
               </label>
               <div className="flex items-center border border-gray-400 rounded w-full h-[50px]">
                 <img src={PasswordIcon} alt="password-icon" className="ml-[20px]" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} />
-                <input className="w-full py-2 px-5 text-gray-700 focus:outline-none" id="password" type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} maxLength={8} />
+                <input className="w-full py-2 px-5 text-gray-700 focus:outline-none" id="password" type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)}/>
               </div>
             </div>
             <div className="flex items-center justify-center">

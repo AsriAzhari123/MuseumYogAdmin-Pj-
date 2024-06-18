@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../components/navbar";
 import Sidebar from "../../components/sidebar";
 import Tab from '../../components/Tabs';
-import users from "../../dataSample/UserAccount";
-
-
-const currentUser = users[1];
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const events = [
   {
@@ -48,6 +46,26 @@ const events = [
 
 export default function EventOverview() {
   const [activeTab, setActiveTab] = useState('All');
+  const [currentUser, setCurrentUser] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:3000/auth/currentUser', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setCurrentUser(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUser();
+  }, [navigate]);
 
   const counts = {
     All: events.length,
@@ -85,7 +103,6 @@ export default function EventOverview() {
               <option value="">Bulk Action</option>
               <option value="delete">Delete</option>
               <option value="archive">Archive</option>
-              {/* Add more options as needed */}
             </select>
             <button className="px-4 py-2 border rounded shadow-custom-shadow bg-white">Apply</button>
             <select className="px-4 py-2 border rounded shadow-custom-shadow">
@@ -101,12 +118,13 @@ export default function EventOverview() {
                   src={event.image}
                   alt={event.name}
                   className="w-36 h-36 object-cover rounded-lg"
+                  onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/150'; }} // Fallback image
                 />
                 <div className="flex-1 flex flex-col space-y-2">
                   <div className="flex flex-row space-x-4">
                     <div className="flex-1">
-                      <span className="text-lg font-bold block">{event.name}</span>
-                      <p className="text-sm text-gray-600 pt-10">{event.deskname}</p>
+                      <span className="text-lg font-bold block">{event.deskname}</span>
+                      <p className="text-sm text-gray-600 pt-10">{event.name}</p>
                     </div>
                     <div className="flex-1">
                       <span className="text-lg font-bold block">{event.titleDesk}</span>
@@ -119,8 +137,8 @@ export default function EventOverview() {
                     <div className="flex-1">
                       <span className="text-lg font-bold block">{event.titleStatus}</span>
                       <span className={`text-sm font-semibold block ${event.status === 'On Going' ? 'text-green-500' : event.status === 'Done' ? 'text-blue-500' : 'text-gray-500'}`}>
-                      {event.status}
-                    </span>
+                        {event.status}
+                      </span>
                     </div>
                   </div>
                 </div>
